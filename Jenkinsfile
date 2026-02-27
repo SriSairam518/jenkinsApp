@@ -31,31 +31,31 @@ pipeline {
             }
         }
 
-    stage('Start Minikube if not running') {
-    steps {
-        sh '''
-        if ! minikube status | grep -q "apiserver: Running"; then
-            echo "Minikube is not running. Starting now..."
-            minikube start --driver=docker --memory=2048 --cpus=2
-        fi
-        '''
-    }
-}
+//     stage('Start Minikube if not running') {
+//     steps {
+//         sh '''
+//         if ! minikube status | grep -q "apiserver: Running"; then
+//             echo "Minikube is not running. Starting now..."
+//             minikube start --driver=docker --memory=2048 --cpus=2
+//         fi
+//         '''
+//     }
+// }
 
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh '''
-                # Replace image tag inside deployment.yaml
-                sed -i "s/IMAGE_TAG/${BUILD_NUMBER}/g" k8s/deployment.yaml
+//         stage('Deploy to Kubernetes') {
+//             steps {
+//                 sh '''
+//                 # Replace image tag inside deployment.yaml
+//                 sed -i "s/IMAGE_TAG/${BUILD_NUMBER}/g" k8s/deployment.yaml
 
-                # Load image into Minikube
-                minikube image load laxmi916/my-k8s-app:${BUILD_NUMBER}
+//                 # Load image into Minikube
+//                 minikube image load valakatisrisairam/jenkinsapp:${BUILD_NUMBER}
 
-                # Apply manifests
-                minikube kubectl -- apply -f k8s/deployment.yaml
-                minikube kubectl -- apply -f k8s/service.yaml
-                '''
-            }
-        }
+//                 # Apply manifests
+//                 minikube kubectl -- apply -f k8s/deployment.yaml
+//                 minikube kubectl -- apply -f k8s/service.yaml
+//                 '''
+//             }
+//         }
     }
 }
