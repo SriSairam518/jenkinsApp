@@ -19,15 +19,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                docker build -t jenkinsApp:${BUILD_NUMBER} .
-                docker tag jenkinsApp:${BUILD_NUMBER} jenkinsApp:${BUILD_NUMBER}
+                docker build -t jenkinsapp:${BUILD_NUMBER} .
+                docker tag jenkinsapp:${BUILD_NUMBER} jenkinsapp:${BUILD_NUMBER}
                 '''
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push jenkinsApp:${BUILD_NUMBER}'
+                sh 'docker push jenkinsapp:${BUILD_NUMBER}'
             }
         }
 
