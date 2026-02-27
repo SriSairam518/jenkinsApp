@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout from GitHub') {
             steps {
                 git branch: 'main',
-                    url: ''
+                    url: 'https://github.com/SriSairam518/jenkinsApp.git'
             }
         }
 
@@ -19,15 +19,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '''
-                docker build -t my-k8s-app:${BUILD_NUMBER} .
-                docker tag my-k8s-app:${BUILD_NUMBER} laxmi916/my-k8s-app:${BUILD_NUMBER}
+                docker build -t jenkinsApp:${BUILD_NUMBER} .
+                docker tag jenkinsApp:${BUILD_NUMBER} jenkinsApp:${BUILD_NUMBER}
                 '''
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push laxmi916/my-k8s-app:${BUILD_NUMBER}'
+                sh 'docker push jenkinsApp:${BUILD_NUMBER}'
             }
         }
 
